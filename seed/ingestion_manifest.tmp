@@ -1,0 +1,137 @@
+{
+  "version": 2,
+  "documents": {
+    "true_data/concepts__cluster-administration__logging.pdf": {
+      "status": "completed",
+      "fingerprint": "1c5f4439f8325343e06421605710915d9394b3bc60a6c008c5d61524cbb8d729",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:58:05.698834+00:00",
+      "chunk_count": 25,
+      "error": null
+    },
+    "true_data/concepts__cluster-administration__monitoring.docx": {
+      "status": "completed",
+      "fingerprint": "b31a9fd26a744ac2386aae62fcd563cc1b5713e164dcdeecce946bb88677b785",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:58:11.311320+00:00",
+      "chunk_count": 18,
+      "error": null
+    },
+    "true_data/concepts__configuration__configmap.html": {
+      "status": "completed",
+      "fingerprint": "8b577c5050e994d3f7d12436c805ffafb4b036ac695c10aae6b32c5f1d3df2fa",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:58:16.174338+00:00",
+      "chunk_count": 16,
+      "error": null
+    },
+    "true_data/concepts__configuration__secret.txt": {
+      "status": "completed",
+      "fingerprint": "92a4860a7d9c240ff656d343f1cb0bc1d9d16904c01f1ce367aaeb99dd71d624",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:58:25.283521+00:00",
+      "chunk_count": 37,
+      "error": null
+    },
+    "true_data/concepts__overview__components.pdf": {
+      "status": "completed",
+      "fingerprint": "4ddefd7d5a5e86333b583d395305c34cb4459940e60d7a87ccef248f657ec282",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:58:30.654139+00:00",
+      "chunk_count": 4,
+      "error": null
+    },
+    "true_data/concepts__overview__what-is-kubernetes.docx": {
+      "status": "failed",
+      "fingerprint": "d892ccd7bb5b639da644771063d7f26d5528e2478c21f7e14121d312d710dadd",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:58:46.096022+00:00",
+      "error": "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/embed_content_free_tier_requests, limit: 100, model: gemini-embedding-1.0, description: Embed content requests per minute limit exceeded on Free Tier. See https://ai.google.dev/gemini-api/docs/rate-limits.\\nPlease retry in 13.075421504s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'description': 'Embed content requests per minute limit exceeded on Free Tier. See https://ai.google.d"
+    },
+    "true_data/concepts__policy__limit-range.html": {
+      "status": "completed",
+      "fingerprint": "b053f2fa36d1d680a2b51225581ba772ac9eb69c9088915bc43b934694680fc6",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:59:05.511483+00:00",
+      "chunk_count": 8,
+      "error": null
+    },
+    "true_data/concepts__policy__resource-quotas.txt": {
+      "status": "completed",
+      "fingerprint": "2297df5064c84cf394507e510f748a587767bf5e0e9f4502a00c93562f51c8c8",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:59:12.676871+00:00",
+      "chunk_count": 29,
+      "error": null
+    },
+    "true_data/concepts__scheduling-eviction__kube-scheduler.pdf": {
+      "status": "completed",
+      "fingerprint": "b4145b2d3d62e58ea71a8952c6bc7234fc8a10219131e5d3b199b5b19221178b",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:59:19.688530+00:00",
+      "chunk_count": 5,
+      "error": null
+    },
+    "true_data/concepts__scheduling-eviction__node-pressure-eviction.docx": {
+      "status": "completed",
+      "fingerprint": "f89f9fd7d8d58e9f2b42a30a3fe582e938bc34ff220865709458bab8498b9b85",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:59:26.027888+00:00",
+      "chunk_count": 26,
+      "error": null
+    },
+    "true_data/concepts__scheduling-eviction__pod-priority-preemption.html": {
+      "status": "completed",
+      "fingerprint": "25179690c55dd4be15e70d10a84e657e9817163240eb18d179e568857ceab99c",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:59:31.608118+00:00",
+      "chunk_count": 17,
+      "error": null
+    },
+    "true_data/concepts__security__overview.txt": {
+      "status": "completed",
+      "fingerprint": "7d6d52dd7fd6836b086509c6df8c70c69c35a9a6b4b7bb7bcbc300221b111fec",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:59:35.754294+00:00",
+      "chunk_count": 7,
+      "error": null
+    },
+    "true_data/concepts__security__rbac-good-practices.pdf": {
+      "status": "failed",
+      "fingerprint": "d659e86c10162b973c6cdc94aaaa69883b718e125af87437fb3b865e1b99cf31",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T11:59:57.150843+00:00",
+      "error": "ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/embed_content_free_tier_requests, limit: 100, model: gemini-embedding-1.0, description: Embed content requests per minute limit exceeded on Free Tier. See https://ai.google.dev/gemini-api/docs/rate-limits.\\nPlease retry in 2.005816525s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'description': 'Embed content requests per minute limit exceeded on Free Tier. See https://ai.google.de"
+    },
+    "true_data/concepts__services-networking__ingress.docx": {
+      "status": "completed",
+      "fingerprint": "29b488d05107c12587db3bd96f64da3a501a5971483d195240f2fbedf967c89b",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T12:00:04.138567+00:00",
+      "chunk_count": 28,
+      "error": null
+    },
+    "true_data/concepts__services-networking__network-policies.html": {
+      "status": "completed",
+      "fingerprint": "ee01c93e421a31d7c15ad93221fca4e62e12bf64e780b60a280f74455f66c71a",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T12:00:10.951340+00:00",
+      "chunk_count": 28,
+      "error": null
+    },
+    "true_data/concepts__services-networking__service.txt": {
+      "status": "completed",
+      "fingerprint": "9415cfbd365e7d9a1d757531221be2681b9f4a6fcdcc15dd71f0859ff61bb27b",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T12:00:20.223381+00:00",
+      "chunk_count": 44,
+      "error": null
+    },
+    "true_data/concepts__storage__persistent-volumes.pdf": {
+      "status": "processing",
+      "fingerprint": "fc9f580b39ef4eb82347fe09de367abf9e8a06172db510b1641916a3317afbea",
+      "ingestion_version": 2,
+      "updated_at": "2026-11-05T12:00:20.229557+00:00"
+    }
+  }
+}
