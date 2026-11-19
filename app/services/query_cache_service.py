@@ -8,6 +8,8 @@ import time
 from collections import defaultdict
 from typing import Any
 
+from langsmith import traceable
+
 from app.config import settings
 
 logger = logging.getLogger(__name__)
@@ -96,12 +98,14 @@ class QueryCacheService:
         with self._lock:
             self._memory_store[key] = (time.time() + ttl_seconds, value)
 
+    @traceable(name="Redis_Cache_Get_Intent", run_type="tool")
     def get_intent(self, question: str) -> str | None:
         return self._get("intent", self.intent_key(question))
 
     def set_intent(self, question: str, intent: str) -> None:
         self._set("intent", self.intent_key(question), intent, settings.cache_ttl_intent)
 
+    @traceable(name="Redis_Cache_Get_RAG_Answer", run_type="tool")
     def get_rag_answer(
         self,
         question: str,
@@ -129,12 +133,14 @@ class QueryCacheService:
             settings.cache_ttl_rag,
         )
 
+    @traceable(name="Redis_Cache_Get_SQL_Generation", run_type="tool")
     def get_sql_generation(self, question: str) -> str | None:
         return self._get("sql_gen", self.sql_gen_key(question))
 
     def set_sql_generation(self, question: str, sql: str) -> None:
         self._set("sql_gen", self.sql_gen_key(question), sql, settings.cache_ttl_sql_gen)
 
+    @traceable(name="Redis_Cache_Get_SQL_Result", run_type="tool")
     def get_sql_result(self, sql: str) -> list[dict[str, Any]] | None:
         value = self._get("sql_result", self.sql_result_key(sql))
         if value is None:

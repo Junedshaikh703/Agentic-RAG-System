@@ -2,6 +2,8 @@
 import json
 import logging
 
+from langsmith import traceable
+
 from app.config import settings
 from app.models import ReflectionResult
 from app.services.llm_service import generate_with_json
@@ -57,6 +59,7 @@ Respond ONLY with a JSON object — no prose before or after:
 """
 
 
+@traceable(name="Self_RAG_Reflect", run_type="chain")
 def reflect_on_answer(
     question: str,
     answer: str,

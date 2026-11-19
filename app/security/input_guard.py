@@ -3,6 +3,8 @@ from __future__ import annotations
 import logging
 from typing import Any
 
+from langsmith import traceable
+
 from app.config import settings
 
 logger = logging.getLogger(__name__)
@@ -80,6 +82,7 @@ def scan_input(text: str) -> dict[str, Any]:
         }
 
 
+@traceable(name="Security_LLM_Guard_Scan", run_type="tool")
 def check_input_safe(text: str) -> tuple[bool, str | None]:
     result = scan_input(text)
     if result["is_safe"]:

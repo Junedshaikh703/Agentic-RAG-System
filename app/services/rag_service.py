@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from langsmith import traceable
 from loguru import logger
 
 from app.config import settings
@@ -35,6 +36,7 @@ def _flag(flags: dict | None, key: str, default):
 
 
 
+@traceable(name="RAG_Retrieve_Pipeline", run_type="retriever")
 def _retrieve(question: str, flags: dict | None = None) -> list[RetrievedChunk]:
     final_top_k = int(_flag(flags, "top_k", 5))
     mode = _flag(flags, "search_mode", "dense")
@@ -78,6 +80,7 @@ def _retrieve(question: str, flags: dict | None = None) -> list[RetrievedChunk]:
     return chunks
 
 
+@traceable(name="RAG_Generate_Pipeline", run_type="chain")
 def _generate(
     question: str,
     chunks: list[RetrievedChunk],

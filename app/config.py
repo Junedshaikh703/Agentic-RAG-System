@@ -1,8 +1,10 @@
+import os
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
     openai_api_key: str = ""
     gemini_api_key: str = ""
@@ -73,9 +75,24 @@ class Settings(BaseSettings):
     log_json: bool = False
     log_level: str = "INFO"
 
+    langsmith_tracing: bool = True
+    langsmith_api_key: str = ""
+    langsmith_project: str = "Agentic-RAG-System"
+    langsmith_endpoint: str = "https://api.smith.langchain.com"
 
 
 settings = Settings()
+
+# Export LangSmith env vars to os.environ so LangGraph and @traceable pick them up automatically
+if settings.langsmith_api_key:
+    tracing_val = "true" if settings.langsmith_tracing else "false"
+    os.environ.setdefault("LANGSMITH_TRACING", tracing_val)
+    os.environ.setdefault("LANGCHAIN_TRACING_V2", tracing_val)
+    os.environ.setdefault("LANGSMITH_API_KEY", settings.langsmith_api_key)
+    os.environ.setdefault("LANGCHAIN_API_KEY", settings.langsmith_api_key)
+    os.environ.setdefault("LANGSMITH_PROJECT", settings.langsmith_project)
+    os.environ.setdefault("LANGCHAIN_PROJECT", settings.langsmith_project)
+    os.environ.setdefault("LANGSMITH_ENDPOINT", settings.langsmith_endpoint)
 
 
 

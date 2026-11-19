@@ -4,6 +4,8 @@ import logging
 import re
 from typing import Any
 
+from langsmith import traceable
+
 from app.config import settings
 
 logger = logging.getLogger(__name__)
@@ -87,6 +89,7 @@ def moderate_output(text: str) -> tuple[bool, str | None]:
     return True, None
 
 
+@traceable(name="Security_PII_Moderation", run_type="tool")
 def moderate_and_redact(text: str) -> tuple[bool, str, str | None]:
     """Moderate output and redact PII. Returns (allowed, redacted_text, reason).
 

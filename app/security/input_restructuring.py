@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import logging
 
+from langsmith import traceable
+
 from app.config import settings
 
 logger = logging.getLogger(__name__)
@@ -60,6 +62,7 @@ def summarize_text(text: str, target_tokens: int = 3_000) -> tuple[str, str]:
     return " ".join(summary_parts), "summarized"
 
 
+@traceable(name="Security_Input_Restructuring", run_type="tool")
 def restructure_input(text: str) -> tuple[str, str]:
     """Apply input restructuring based on token count.
 

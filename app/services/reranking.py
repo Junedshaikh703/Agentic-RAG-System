@@ -1,6 +1,9 @@
 import logging
 from typing import cast
 
+from langsmith import traceable
+from langsmith.run_helpers import get_current_run_tree
+
 from app.config import settings
 from app.models import RetrievedChunk
 
@@ -30,6 +33,7 @@ class Reranker:
         return self._voyage_client
 
     
+    @traceable(name="CrossEncoder_Rerank", run_type="retriever")
     def rerank(
         self,
         query: str,
@@ -44,8 +48,21 @@ class Reranker:
 
         try:
             if self.backend == "voyage":
-                return self._rerank_voyage(query, chunks, top_k)
-            return self._rerank_local(query, chunks, top_k)
+                reranked = self._rerank_voyage(query, chunks, top_k)
+            else:
+                reranked = self._rerank_local(query, chunks, top_k)
+
+            run_tree = get_current_run_tree()
+            if run_tree is not None:
+                run_tree.extra.setdefault("metadata", {}).update(
+                    {
+                        "reranker_backend": self.backend,
+                        "reranker_model": settings.reranker_model if self.backend != "voyage" else settings.voyage_model,
+                        "input_chunk_count": len(chunks),
+                        "output_top_k": top_k,
+                    }
+                )
+            return reranked
         except Exception:
             logger.exception("Reranking failed, returning original order")
             return chunks[:top_k]

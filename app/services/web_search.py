@@ -1,10 +1,13 @@
 import logging
 
+from langsmith import traceable
+
 from app.config import settings
 from app.models import RetrievedChunk
 
 logger = logging.getLogger(__name__)
 
+@traceable(name="Tavily_Web_Search", run_type="tool")
 def search_web(query: str, max_results: int = 5) -> list[RetrievedChunk]:
 
     if not settings.tavily_api_key:

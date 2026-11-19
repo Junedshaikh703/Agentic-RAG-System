@@ -6,6 +6,8 @@ import time
 
 from google import genai
 from google.genai import errors
+from langsmith import traceable
+from langsmith.run_helpers import get_current_run_tree
 from tenacity import (
     retry,
     stop_after_attempt,
@@ -104,6 +106,7 @@ def _wait_for_retry(retry_state) -> float:
     before_sleep=before_sleep_log(logger, logging.WARNING),
     reraise=True,
 )
+@traceable(name="Gemini_Embed_Batch", run_type="embedding")
 def _embed_batch(
     texts: list[str],
     model: str,
@@ -143,6 +146,7 @@ def _embed_batch(
     return vectors
 
 
+@traceable(name="Embed_Texts_With_Cache", run_type="embedding")
 def embed_texts(
     texts: list[str],
     model: str | None = None,
@@ -167,6 +171,17 @@ def embed_texts(
         else:
             miss_indices.append(index)
             miss_texts.append(text)
+
+    run_tree = get_current_run_tree()
+    if run_tree is not None:
+        run_tree.extra.setdefault("metadata", {}).update(
+            {
+                "embedding_model": model,
+                "total_texts": len(texts),
+                "cache_hits": len(texts) - len(miss_texts),
+                "cache_misses": len(miss_texts),
+            }
+        )
 
     # Generate missing embeddings in controlled batches.
     for start in range(0, len(miss_texts), MAX_BATCH_SIZE):

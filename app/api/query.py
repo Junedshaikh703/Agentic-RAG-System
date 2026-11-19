@@ -2,6 +2,7 @@ import uuid
 from app.config import settings
 from fastapi import APIRouter, Depends, HTTPException
 from langgraph.types import Command
+from langsmith import traceable
 from pydantic import BaseModel
 
 from app.middleware.rate_limiter import is_allowed_user
@@ -30,6 +31,7 @@ class SqlExecuteRequest(BaseModel):
 
 
 @router.post("/query", response_model=ChatResponse)
+@traceable(name="POST /query", run_type="chain")
 async def query(
     body: QueryRequest,
     user: User = Depends(get_current_user),
@@ -129,6 +131,7 @@ async def query(
 
 
 @router.post("/query/sql/execute", response_model=ChatResponse)
+@traceable(name="POST /query/sql/execute", run_type="chain")
 async def execute_sql(
     body: SqlExecuteRequest,
     user: User = Depends(get_current_user),

@@ -1,5 +1,8 @@
 import re
 
+from langsmith import traceable
+from langsmith.run_helpers import get_current_run_tree
+
 from app.config import settings
 from app.models import RetrievedChunk
 from app.services.embedding_service import embed_texts
@@ -21,6 +24,7 @@ class HyDERetriever:
     def __init__(self, num_hypotheses: int | None = None) -> None:
         self.num_hypotheses = num_hypotheses or settings.hyde_num_hypotheses
 
+    @traceable(name="HyDE_Retriever", run_type="retriever")
     def retrieve(self, question: str, top_k: int = 5) -> list[RetrievedChunk]:
         if not question or not question.strip():
             return []
@@ -39,6 +43,10 @@ class HyDERetriever:
                     hypotheses.append(hypothesis)
             except Exception:
                 continue
+
+        run_tree = get_current_run_tree()
+        if run_tree is not None:
+            run_tree.extra.setdefault("metadata", {})["generated_hypotheses"] = hypotheses
 
         all_texts = hypotheses + [question]
 

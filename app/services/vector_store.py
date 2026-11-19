@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import uuid
 
+from langsmith import traceable
 from qdrant_client import QdrantClient
 from qdrant_client.models import (
     Distance,
@@ -202,6 +203,7 @@ def upsert_chunks(
         logging.getLogger(__name__).info(logger_message)
 
 
+@traceable(name="Qdrant_Dense_Search", run_type="retriever")
 def search(
     query_embedding: list[float],
     top_k: int = 5,
@@ -254,6 +256,7 @@ def _build_sparse_index():
     return sparse_index
 
 
+@traceable(name="TFIDF_Sparse_Search", run_type="retriever")
 def sparse_search(
     query_text: str,
     top_k: int = 5,
@@ -268,6 +271,7 @@ def sparse_search(
     )
 
 
+@traceable(name="Hybrid_RRF_Search", run_type="retriever")
 def hybrid_search(
     query_embedding: list[float],
     query_text: str,

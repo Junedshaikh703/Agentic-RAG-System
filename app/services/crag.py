@@ -2,6 +2,8 @@
 import json
 import logging
 
+from langsmith import traceable
+
 from app.config import settings
 from app.models import CRAGEvaluation, RetrievedChunk
 from app.services.llm_service import generate_with_json
@@ -27,6 +29,7 @@ Respond ONLY with a JSON object:
 """
 
 
+@traceable(name="CRAG_Grade_Chunks", run_type="chain")
 def grade_chunks(question: str, chunks: list[RetrievedChunk]) -> CRAGEvaluation:
     """Grade retrieved chunks for relevance to the question."""
     documents = (
@@ -69,6 +72,7 @@ def should_trigger_web_search(evaluation: CRAGEvaluation) -> bool:
     )
 
 
+@traceable(name="CRAG_Pipeline", run_type="chain")
 def crag_pipeline(
     question: str,
     chunks: list[RetrievedChunk],

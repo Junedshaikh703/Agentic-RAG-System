@@ -3,6 +3,8 @@ import logging
 
 from google import genai
 from google.genai import types, errors
+from langsmith import traceable
+from langsmith.run_helpers import get_current_run_tree
 
 from tenacity import (
     retry,
@@ -36,6 +38,7 @@ def is_retryable_error(exc: BaseException) -> bool:
     before_sleep=before_sleep_log(logger, logging.WARNING),
     reraise=True,
 )
+@traceable(name="Gemini_LLM_Generate", run_type="llm")
 def _generate(
     system_prompt: str,
     user_message: str,
@@ -60,22 +63,36 @@ def _generate(
     text = response.text or ""
 
     usage_metadata = response.usage_metadata
+    prompt_tokens = usage_metadata.prompt_token_count if usage_metadata else 0
+    completion_tokens = usage_metadata.candidates_token_count if usage_metadata else 0
+    total_tokens = usage_metadata.total_token_count if usage_metadata else 0
 
     usage = {
-        "prompt_tokens": (
-            usage_metadata.prompt_token_count if usage_metadata else 0
-        ),
-        "completion_tokens": (
-            usage_metadata.candidates_token_count if usage_metadata else 0
-        ),
-        "total_tokens": (
-            usage_metadata.total_token_count if usage_metadata else 0
-        ),
+        "prompt_tokens": prompt_tokens,
+        "completion_tokens": completion_tokens,
+        "total_tokens": total_tokens,
     }
+
+    run_tree = get_current_run_tree()
+    if run_tree is not None:
+        run_tree.extra.setdefault("metadata", {}).update(
+            {
+                "ls_provider": "google_genai",
+                "ls_model_name": model,
+                "ls_model_type": "chat",
+                "ls_temperature": temperature,
+                "json_mode": json_mode,
+            }
+        )
 
     return {
         "text": text,
         "usage": usage,
+        "usage_metadata": {
+            "input_tokens": prompt_tokens,
+            "output_tokens": completion_tokens,
+            "total_tokens": total_tokens,
+        },
     }
 
 

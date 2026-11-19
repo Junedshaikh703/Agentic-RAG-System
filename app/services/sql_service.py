@@ -6,6 +6,7 @@ import uuid
 from typing import Any
 
 import psycopg2
+from langsmith import traceable
 
 from app.config import settings
 from app.services.llm_service import generate_with_json
@@ -53,6 +54,7 @@ class SQLService:
     def __init__(self):
         self._schema_context: str | None = None
 
+    @traceable(name="Postgres_Inspect_Schema", run_type="tool")
     def _build_schema_context(self) -> str:
         if self._schema_context is not None:
             return self._schema_context
@@ -82,6 +84,7 @@ class SQLService:
         return self._schema_context
 
     
+    @traceable(name="Generate_SQL", run_type="chain")
     def generate_sql(self, question: str) -> dict:
         cached = query_cache.get_sql_generation(question)
         if cached is not None:
@@ -109,6 +112,7 @@ class SQLService:
         return payload
 
     
+    @traceable(name="Postgres_Execute_SQL", run_type="tool")
     def execute_sql(self, sql: str) -> list[dict]:
         if not is_select_only(sql):
             raise ValueError("Only SELECT statements are allowed")

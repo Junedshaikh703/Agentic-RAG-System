@@ -2,6 +2,8 @@ import json
 import logging
 from typing import Literal
 
+from langsmith import traceable
+
 from app.config import settings
 from app.services.llm_service import generate_with_json
 from app.services.query_cache_service import query_cache
@@ -46,6 +48,7 @@ def _looks_like_document_question(question: str) -> bool:
     return any(hint in lowered for hint in _DOCUMENT_HINTS)
 
 
+@traceable(name="Intent_Classifier", run_type="chain")
 def classify_intent(question: str) -> Intent:
     if _looks_like_document_question(question):
         query_cache.set_intent(question, "rag")
